@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -7,8 +8,9 @@ public class PlayerController : MonoBehaviour
     private InputAction moveAction;
     private InputAction sprintAction;
 
-    [SerializeField] private float walkSpeed = 2f;
-    [SerializeField] private float sprintSpeed = 3.5f;
+    [SerializeField] private float horizontalSpeed = 3.0f;
+    [SerializeField] private float verticalSpeed = 1.5f;
+    [SerializeField] private float sprintSpeed = 1.5f;
     [SerializeField] private float staminaMax = 100.0f;
     [SerializeField] private float staminaDrain = 20.0f;
     [SerializeField] private float staminaRegen = 30.0f;
@@ -34,7 +36,8 @@ public class PlayerController : MonoBehaviour
         // Movement
         if (sprintAction.IsPressed() & runningEnabled)
         {
-            transform.position += Vector3.Normalize(new Vector3(moveValue.x, moveValue.y, 0)) * sprintSpeed * Time.deltaTime;
+            transform.position += Vector3.Normalize(new Vector3(moveValue.x, 0, 0)) * horizontalSpeed * sprintSpeed * Time.deltaTime;
+            transform.position += Vector3.Normalize(new Vector3(0, moveValue.y, 0)) * verticalSpeed * sprintSpeed * Time.deltaTime;
             staminaCurrent -= staminaDrain * Time.deltaTime;
             if (staminaCurrent < 0)
             {
@@ -43,7 +46,8 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            transform.position += Vector3.Normalize(new Vector3(moveValue.x, moveValue.y, 0)) * walkSpeed * Time.deltaTime;
+            transform.position += Vector3.Normalize(new Vector3(moveValue.x, 0, 0)) * horizontalSpeed * Time.deltaTime;
+            transform.position += Vector3.Normalize(new Vector3(0, moveValue.y, 0)) * verticalSpeed * Time.deltaTime;
             if (staminaCurrent < staminaMax)
             {
                 staminaCurrent += staminaRegen * Time.deltaTime;
