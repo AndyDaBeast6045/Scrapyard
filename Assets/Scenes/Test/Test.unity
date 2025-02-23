@@ -153,12 +153,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   horizontalSpeed: 3
   verticalSpeed: 1.5
-  sprintSpeed: 3.5
+  sprintSpeed: 1.5
   staminaMax: 100
-  staminaDrain: 0.1
-  staminaRegen: 0.2
+  staminaDrain: 20
+  staminaRegen: 30
   staminaCurrent: 0
   runningEnabled: 0
+  jumping: 0
 --- !u!212 &30457953
 SpriteRenderer:
   m_ObjectHideFlags: 0
