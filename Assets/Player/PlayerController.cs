@@ -27,8 +27,6 @@ public class PlayerController : MonoBehaviour
         moveAction = InputSystem.actions.FindAction("Move");
         sprintAction = InputSystem.actions.FindAction("Sprint");
         jumpAction = InputSystem.actions.FindAction("Jump");
-        jumping = false;
-        falling = false;
     }
 
     // Update is called once per frame

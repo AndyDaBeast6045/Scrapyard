@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 
-public class PlayerHitCounter : MonoBehaviour
+public class HitCounter : MonoBehaviour
 {
 
     private InputAction lightAttackAction;
@@ -39,8 +39,8 @@ public class PlayerHitCounter : MonoBehaviour
         }
 
         
-
-        if(lightAttackAction.WasPressedThisFrame() || heavyAttackAction.WasPressedThisFrame()) {
+        // if(lightAttackAction.WasPressedThisFrame() || heavyAttackAction.WasPressedThisFrame())
+        if(Input.GetKeyDown(KeyCode.F)) {
             if (!isHitting) isHitting = true;
             timer = hitTime;
             hitCounter++;
