@@ -1,13 +1,16 @@
+using System.Collections;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
-    private InputAction moveAction;
-    private InputAction sprintAction;
-    private InputAction jumpAction;
+    private InputAction _moveAction;
+    private InputAction _sprintAction;
+    private InputAction _jumpAction;
+    private InputAction _lightAction;
 
     [SerializeField] private float moveSpeed = 1.5f;
     [SerializeField] private float sprintSpeed = 1.5f;
@@ -17,46 +20,87 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float staminaRegen = 30.0f;
     [SerializeField] private float staminaCurrent;
     [SerializeField] private bool runningEnabled;
+    [SerializeField] private bool moveEnabled;
+    [SerializeField] private Animator animationController;
 
-    private Vector2 moveValue;
+    private Vector2 _moveValue;
+    private bool _alternate = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         staminaCurrent = staminaMax;
-        moveAction = InputSystem.actions.FindAction("Move");
-        sprintAction = InputSystem.actions.FindAction("Sprint");
-        jumpAction = InputSystem.actions.FindAction("Jump");
+        _moveAction = InputSystem.actions.FindAction("Move");
+        _sprintAction = InputSystem.actions.FindAction("Sprint");
+        _jumpAction = InputSystem.actions.FindAction("Jump");
+        _lightAction = InputSystem.actions.FindAction("LightAttack");
     }
 
     // Update is called once per frame
     void Update()
     {
         // Getting the movement input
-        moveValue = moveAction.ReadValue<Vector2>();
+        _moveValue = _moveAction.ReadValue<Vector2>();
+        //transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
 
-        // Movement
-        if (sprintAction.IsPressed() & runningEnabled)
+        if (_lightAction.IsPressed() & moveEnabled)
         {
-            transform.position += new Vector3(moveValue.x, 0, 0) * moveSpeed * sprintSpeed * Time.deltaTime;
-            transform.position += new Vector3(0, moveValue.y, moveValue.y) * moveSpeed * Time.deltaTime;
-            staminaCurrent -= staminaDrain * Time.deltaTime;
-            if (staminaCurrent < 0)
+            if (_alternate)
             {
-                runningEnabled = false;
+                animationController.SetTrigger("Light1");
+                _alternate = false;
+            }
+            else
+            {
+                animationController.SetTrigger("Light2");
+                _alternate = true;
             }
         }
-        else
+
+
+        if (moveEnabled)
         {
-            transform.position += new Vector3(moveValue.x, moveValue.y, moveValue.y) * moveSpeed * Time.deltaTime;
-            if (staminaCurrent < staminaMax)
+            if (_moveValue != new Vector2(0, 0))
             {
-                staminaCurrent += staminaRegen * Time.deltaTime;
+                animationController.SetTrigger("Moving");
             }
-            if (staminaCurrent >= staminaMax)
+            else
             {
-                runningEnabled = true;
-                staminaCurrent = staminaMax;
+                animationController.SetTrigger("Idle");
+            }
+
+            if (_moveValue.x > 0)
+            {
+                transform.rotation = new Quaternion(0, 0, 0, 0);
+            }
+            else if (_moveValue.x < 0)
+            {
+                transform.rotation = new Quaternion(0, 180, 0, 0);
+            }
+
+            // Movement
+            if (_sprintAction.IsPressed() & runningEnabled)
+            {
+                transform.position += new Vector3(_moveValue.x, 0, 0) * moveSpeed * sprintSpeed * Time.deltaTime;
+                transform.position += new Vector3(0, _moveValue.y, _moveValue.y) * moveSpeed * Time.deltaTime;
+                staminaCurrent -= staminaDrain * Time.deltaTime;
+                if (staminaCurrent < 0)
+                {
+                    runningEnabled = false;
+                }
+            }
+            else
+            {
+                transform.position += new Vector3(_moveValue.x, _moveValue.y, _moveValue.y) * moveSpeed * Time.deltaTime;
+                if (staminaCurrent < staminaMax)
+                {
+                    staminaCurrent += staminaRegen * Time.deltaTime;
+                }
+                if (staminaCurrent >= staminaMax)
+                {
+                    runningEnabled = true;
+                    staminaCurrent = staminaMax;
+                }
             }
         }
     }
