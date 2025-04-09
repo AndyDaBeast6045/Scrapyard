@@ -9,22 +9,19 @@ public class PlayerController : MonoBehaviour
 {
     private InputAction _moveAction;
     private InputAction _sprintAction;
-    private InputAction _jumpAction;
     private InputAction _lightAction;
 
     [SerializeField] private float moveSpeed = 1.5f;
     [SerializeField] private float sprintSpeed = 1.5f;
-    [SerializeField] private float jumpSpeed = 3.0f;
     [SerializeField] private float staminaMax = 100.0f;
     [SerializeField] private float staminaDrain = 20.0f;
     [SerializeField] private float staminaRegen = 30.0f;
     [SerializeField] private float staminaCurrent;
-    [SerializeField] private bool runningEnabled;
-    [SerializeField] private bool moveEnabled;
+    [SerializeField] private bool moveEnabled = true;
     [SerializeField] private Animator animationController;
 
     private Vector2 _moveValue;
-    private bool _alternate = false;
+    private bool _runningEnabled = true;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -32,7 +29,6 @@ public class PlayerController : MonoBehaviour
         staminaCurrent = staminaMax;
         _moveAction = InputSystem.actions.FindAction("Move");
         _sprintAction = InputSystem.actions.FindAction("Sprint");
-        _jumpAction = InputSystem.actions.FindAction("Jump");
         _lightAction = InputSystem.actions.FindAction("LightAttack");
     }
 
@@ -43,32 +39,29 @@ public class PlayerController : MonoBehaviour
         _moveValue = _moveAction.ReadValue<Vector2>();
         //transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
 
-        if (_lightAction.IsPressed() & moveEnabled)
+        if (_moveValue != new Vector2(0, 0))
         {
-            if (_alternate)
-            {
-                animationController.SetTrigger("Light1");
-                _alternate = false;
-            }
-            else
-            {
-                animationController.SetTrigger("Light2");
-                _alternate = true;
-            }
+            animationController.SetBool("Moving", true);
         }
-
+        else
+        {
+            animationController.SetBool("Moving", false);
+        }
+        if (_lightAction.IsPressed())
+        {
+            animationController.SetBool("LightHeld", true);
+        }
+        else
+        {
+            animationController.SetBool("LightHeld", false);
+        }
+        if (_lightAction.WasPressedThisFrame())
+        {
+            animationController.SetTrigger("Light");
+        }
 
         if (moveEnabled)
         {
-            if (_moveValue != new Vector2(0, 0))
-            {
-                animationController.SetTrigger("Moving");
-            }
-            else
-            {
-                animationController.SetTrigger("Idle");
-            }
-
             if (_moveValue.x > 0)
             {
                 transform.rotation = new Quaternion(0, 0, 0, 0);
@@ -79,29 +72,35 @@ public class PlayerController : MonoBehaviour
             }
 
             // Movement
-            if (_sprintAction.IsPressed() & runningEnabled)
+            if (_sprintAction.IsPressed() & _runningEnabled)
             {
                 transform.position += new Vector3(_moveValue.x, 0, 0) * moveSpeed * sprintSpeed * Time.deltaTime;
                 transform.position += new Vector3(0, _moveValue.y, _moveValue.y) * moveSpeed * Time.deltaTime;
                 staminaCurrent -= staminaDrain * Time.deltaTime;
+                animationController.speed = 1.5f;
                 if (staminaCurrent < 0)
                 {
-                    runningEnabled = false;
+                    _runningEnabled = false;
                 }
             }
             else
             {
                 transform.position += new Vector3(_moveValue.x, _moveValue.y, _moveValue.y) * moveSpeed * Time.deltaTime;
+                animationController.speed = 1;
                 if (staminaCurrent < staminaMax)
                 {
                     staminaCurrent += staminaRegen * Time.deltaTime;
                 }
                 if (staminaCurrent >= staminaMax)
                 {
-                    runningEnabled = true;
+                    _runningEnabled = true;
                     staminaCurrent = staminaMax;
                 }
             }
+        }
+        else
+        {
+            animationController.speed = 1;
         }
     }
 }

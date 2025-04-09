@@ -51,8 +51,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.5066436, y: 1.0367589, z: 0.2}
-  m_Center: {x: -0.017276019, y: -0.002550602, z: 0}
+  m_Size: {x: 0.3, y: 0.65, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &452992330192675496
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,13 +158,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 1.5
   sprintSpeed: 1.5
-  jumpSpeed: 3
   staminaMax: 100
   staminaDrain: 20
   staminaRegen: 30
   staminaCurrent: 0
-  runningEnabled: 0
-  moveEnabled: 0
+  moveEnabled: 1
   animationController: {fileID: 91683947290590599}
 --- !u!95 &91683947290590599
 Animator:
@@ -232,12 +230,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7145198348311737387, guid: e81a441f70aea214890338179401b52a, type: 3}
+  m_Sprite: {fileID: 6863246505373101655, guid: c30fb595b327c3a48938eaf22c25b789, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.68, y: 0.94}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -289,5 +287,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.50333625, y: 1.0424507, z: 0.2}
-  m_Center: {x: -0.022847801, y: 0.0016128719, z: 0}
+  m_Size: {x: 0.4, y: 0.7, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
