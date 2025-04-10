@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 8a4cac046c53687429e0277b4535100e
+guid: 1981a109d0cddf84083fcddad3165ff4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6177710391557522937
-    second: pure-black-background-f82588d3_0
+      213: -3010704914664389726
+    second: tempsprite_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: pure-black-background-f82588d3_0
+      name: tempsprite_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1200
-        height: 600
+        width: 128
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9f58606ced2abb550800000000000000
-      internalID: 6177710391557522937
+      spriteID: 2a308edd4d3d736d0800000000000000
+      internalID: -3010704914664389726
       vertices: []
       indices: 
       edges: []
@@ -134,8 +134,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      pure-black-background-f82588d3_0: 6177710391557522937
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
