@@ -13,6 +13,7 @@ public class EnemyOne : MonoBehaviour
     private bool isShielded = false;
     [SerializeField] private float shieldDuration;
     private float shieldTimer;
+    private float damageTemp;
 
 
     //private Health playerHealth; (Eshaan)
@@ -32,7 +33,7 @@ public class EnemyOne : MonoBehaviour
                     isShielded = true;
                 }
             } else {
-
+                Shield();
             }
         }
 
@@ -43,9 +44,11 @@ public class EnemyOne : MonoBehaviour
 
     private void Shield() {
         shieldTimer += Time.deltaTime;
-
+        // damageTemp = playerDamage;
+        // playerDamage = 0;
         if (shieldTimer > shieldDuration) {
             isShielded = !isShielded;
+            // playerDamage = damageTemp;
         }
     }
 
