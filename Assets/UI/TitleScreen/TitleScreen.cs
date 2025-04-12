@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class TitleScreen : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class TitleScreen : MonoBehaviour
     public GameObject menuPanel;        // contains menu w buttons
     public GameObject optionsPanel;    // the options panel that will pop up
 
+    TextMeshProUGUI pressAnyKeyTMP;
     private bool hasPressedKey = false;
 
     void Start()
@@ -17,6 +19,7 @@ public class TitleScreen : MonoBehaviour
         menuPanel.SetActive(false);
         pressAnyKeyText.SetActive(true);
         optionsPanel.SetActive(false);  // Make sure options panel is hidden at the start
+        pressAnyKeyTMP = pressAnyKeyText.GetComponent<TextMeshProUGUI>();
     }
 
     void Update()
@@ -29,6 +32,14 @@ public class TitleScreen : MonoBehaviour
             {
                 ShowMenu();
             }
+        }
+
+        // Flicker the "Press Any Key" text if it's active
+        if (pressAnyKeyText.activeSelf && pressAnyKeyTMP != null)
+        {
+            float alpha = Mathf.PingPong(Time.time * 1f, 1f); // flickering
+            Color c = pressAnyKeyTMP.color;
+            pressAnyKeyTMP.color = new Color(c.r, c.g, c.b, alpha);
         }
     }
 
