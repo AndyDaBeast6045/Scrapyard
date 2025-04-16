@@ -1,8 +1,10 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class EnemyOne : MonoBehaviour
+public class EnemyTwo : MonoBehaviour
 {
+    [SerializeField] private GameObject player;
+    [SerializeField] private float speed;
+    [SerializeField] private float chargeSpeed;
     [SerializeField] private float attackCooldown;
     [SerializeField] private float range;
     [SerializeField] private float colliderDistance;
@@ -15,6 +17,9 @@ public class EnemyOne : MonoBehaviour
     [SerializeField] private float shieldDuration;
     private float shieldTimer;
     private float damageTemp;
+    private float distance;
+    private bool isPlayerFound = false;
+
 
 
     //private Health playerHealth; (Eshaan)
@@ -23,10 +28,22 @@ public class EnemyOne : MonoBehaviour
        enemyPatrol = GetComponentInParent<EnemyOnePatrol>();
     }
 
+    void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+        
+    }
+
+
     void Update() {
         cooldownTimer += Time.deltaTime;
 
-        if (PlayerInSight()) {
+        
+
+        if (isPlayerFound) {
+
+            distance = Vector2.Distance(transform.position, player.transform.position);
+            Debug.Log("Player is in sight");
             if (!isShielded) {
                 if (cooldownTimer >= attackCooldown) {
                     // playerHealth.TakeDamage(damage);
@@ -38,8 +55,9 @@ public class EnemyOne : MonoBehaviour
             }
         }
 
-        if (enemyPatrol != null) {
-            enemyPatrol.enabled = !PlayerInSight();
+        if (PlayerInSight()) {
+            enemyPatrol.enabled = false;
+            isPlayerFound = true;
         }
     }
 
@@ -61,7 +79,6 @@ public class EnemyOne : MonoBehaviour
         //    playerHealth = hit.transform.GetComponent<Health done by Eshaan>();
         }
 
-        if (hit.collider != null) Debug.Log("Player in sight");
         return hit.collider != null;
     }
 
