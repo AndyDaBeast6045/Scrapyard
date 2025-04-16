@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     private InputAction _moveAction;
     private InputAction _sprintAction;
     private InputAction _lightAction;
+    private InputAction _heavyAction;
 
     [SerializeField] private float moveSpeed = 1.5f;
     [SerializeField] private float sprintSpeed = 1.5f;
@@ -30,6 +31,7 @@ public class PlayerController : MonoBehaviour
         _moveAction = InputSystem.actions.FindAction("Move");
         _sprintAction = InputSystem.actions.FindAction("Sprint");
         _lightAction = InputSystem.actions.FindAction("LightAttack");
+        _heavyAction = InputSystem.actions.FindAction("HeavyAttack");
     }
 
     // Update is called once per frame
@@ -47,17 +49,13 @@ public class PlayerController : MonoBehaviour
         {
             animationController.SetBool("Moving", false);
         }
-        if (_lightAction.IsPressed())
-        {
-            animationController.SetBool("LightHeld", true);
-        }
-        else
-        {
-            animationController.SetBool("LightHeld", false);
-        }
         if (_lightAction.WasPressedThisFrame())
         {
             animationController.SetTrigger("Light");
+        }
+        if (_heavyAction.WasPressedThisFrame() && (moveEnabled == true))
+        {
+            animationController.SetTrigger("Heavy");
         }
 
         if (moveEnabled)
@@ -77,7 +75,7 @@ public class PlayerController : MonoBehaviour
                 transform.position += new Vector3(_moveValue.x, 0, 0) * moveSpeed * sprintSpeed * Time.deltaTime;
                 transform.position += new Vector3(0, _moveValue.y, _moveValue.y) * moveSpeed * Time.deltaTime;
                 staminaCurrent -= staminaDrain * Time.deltaTime;
-                animationController.speed = 1.5f;
+                animationController.speed = 2f;
                 if (staminaCurrent < 0)
                 {
                     _runningEnabled = false;
