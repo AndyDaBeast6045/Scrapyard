@@ -36,6 +36,14 @@ public class PlayerController : MonoBehaviour
     {
         return currentHealth;
     }
+    public float getMaxStamina()
+    {
+        return staminaMax;
+    }
+    public float getCurrentStamina()
+    {
+        return staminaCurrent;
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
