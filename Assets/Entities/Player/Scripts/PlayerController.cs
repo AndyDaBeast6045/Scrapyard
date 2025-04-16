@@ -11,7 +11,11 @@ public class PlayerController : MonoBehaviour
     private InputAction _sprintAction;
     private InputAction _lightAction;
     private InputAction _heavyAction;
+    private bool isColliding = false;
+    private bool dead = false;
 
+    [SerializeField] private int maxHealth = 10;
+    [SerializeField] private int currentHealth = 10;
     [SerializeField] private float moveSpeed = 1.5f;
     [SerializeField] private float sprintSpeed = 1.5f;
     [SerializeField] private float staminaMax = 100.0f;
@@ -23,6 +27,15 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 _moveValue;
     private bool _runningEnabled = true;
+
+    public int getMaxHealth()
+    {
+        return maxHealth;
+    }
+    public int getCurrentHealth()
+    {
+        return currentHealth;
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -37,6 +50,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        isColliding = false;
         // Getting the movement input
         _moveValue = _moveAction.ReadValue<Vector2>();
         //transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
@@ -100,5 +114,22 @@ public class PlayerController : MonoBehaviour
         {
             animationController.speed = 1;
         }
+    }
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (!isColliding)
+        {
+            if (collision.gameObject.tag == "EnemyAttack" && !dead)
+            {
+                animationController.SetTrigger("Damaged");
+                currentHealth -= 1;
+                if (currentHealth <= 0 && !dead)
+                {
+                    animationController.SetTrigger("Death");
+                    dead = true;
+                }
+            }
+        }
+        isColliding = true;
     }
 }
