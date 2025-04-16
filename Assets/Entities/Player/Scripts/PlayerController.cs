@@ -10,7 +10,12 @@ public class PlayerController : MonoBehaviour
     private InputAction _moveAction;
     private InputAction _sprintAction;
     private InputAction _lightAction;
+    private InputAction _heavyAction;
+    private bool isColliding = false;
+    private bool dead = false;
 
+    [SerializeField] private int maxHealth = 10;
+    [SerializeField] private int currentHealth = 10;
     [SerializeField] private float moveSpeed = 1.5f;
     [SerializeField] private float sprintSpeed = 1.5f;
     [SerializeField] private float staminaMax = 100.0f;
@@ -23,6 +28,15 @@ public class PlayerController : MonoBehaviour
     private Vector2 _moveValue;
     private bool _runningEnabled = true;
 
+    public int getMaxHealth()
+    {
+        return maxHealth;
+    }
+    public int getCurrentHealth()
+    {
+        return currentHealth;
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -30,11 +44,13 @@ public class PlayerController : MonoBehaviour
         _moveAction = InputSystem.actions.FindAction("Move");
         _sprintAction = InputSystem.actions.FindAction("Sprint");
         _lightAction = InputSystem.actions.FindAction("LightAttack");
+        _heavyAction = InputSystem.actions.FindAction("HeavyAttack");
     }
 
     // Update is called once per frame
     void Update()
     {
+        isColliding = false;
         // Getting the movement input
         _moveValue = _moveAction.ReadValue<Vector2>();
         //transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
@@ -47,17 +63,13 @@ public class PlayerController : MonoBehaviour
         {
             animationController.SetBool("Moving", false);
         }
-        if (_lightAction.IsPressed())
-        {
-            animationController.SetBool("LightHeld", true);
-        }
-        else
-        {
-            animationController.SetBool("LightHeld", false);
-        }
         if (_lightAction.WasPressedThisFrame())
         {
             animationController.SetTrigger("Light");
+        }
+        if (_heavyAction.WasPressedThisFrame() && (moveEnabled == true))
+        {
+            animationController.SetTrigger("Heavy");
         }
 
         if (moveEnabled)
@@ -77,7 +89,7 @@ public class PlayerController : MonoBehaviour
                 transform.position += new Vector3(_moveValue.x, 0, 0) * moveSpeed * sprintSpeed * Time.deltaTime;
                 transform.position += new Vector3(0, _moveValue.y, _moveValue.y) * moveSpeed * Time.deltaTime;
                 staminaCurrent -= staminaDrain * Time.deltaTime;
-                animationController.speed = 1.5f;
+                animationController.speed = 2f;
                 if (staminaCurrent < 0)
                 {
                     _runningEnabled = false;
@@ -102,5 +114,22 @@ public class PlayerController : MonoBehaviour
         {
             animationController.speed = 1;
         }
+    }
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (!isColliding)
+        {
+            if (collision.gameObject.tag == "EnemyAttack" && !dead)
+            {
+                animationController.SetTrigger("Damaged");
+                currentHealth -= 1;
+                if (currentHealth <= 0 && !dead)
+                {
+                    animationController.SetTrigger("Death");
+                    dead = true;
+                }
+            }
+        }
+        isColliding = true;
     }
 }
