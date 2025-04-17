@@ -11,6 +11,8 @@ public class EnemyController : MonoBehaviour
     private int xMovement = 0;
     private float yMovement = 0;
     private bool isColliding = false;
+    private bool fastEnemy = false;
+
     [SerializeField] private bool dead = false;
 
     [SerializeField] private int health = 5;
@@ -25,7 +27,12 @@ public class EnemyController : MonoBehaviour
         {
             playerObject = GameObject.Find("Player");
         }
-
+        if (Random.Range(0f, 1f) > 0.7f)
+        {
+            fastEnemy = true;
+            moveSpeed = 1.25f;
+            animationController.speed = 2;
+        }
     }
 
     // Update is called once per frame
