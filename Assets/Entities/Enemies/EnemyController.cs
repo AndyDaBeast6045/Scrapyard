@@ -7,6 +7,7 @@ using UnityEngine.UIElements;
 public class EnemyController : MonoBehaviour
 {
     private GameObject playerObject = null;
+    private GameObject hitCounter = null;
     private Vector2 playerPosition;
     private int xMovement = 0;
     private float yMovement = 0;
@@ -26,6 +27,10 @@ public class EnemyController : MonoBehaviour
         if (playerObject == null)
         {
             playerObject = GameObject.Find("Player");
+        }
+        if (hitCounter == null)
+        {
+            hitCounter = GameObject.Find("HitCounter");
         }
         if (Random.Range(0f, 1f) > 0.7f)
         {
@@ -90,6 +95,7 @@ public class EnemyController : MonoBehaviour
             {
                 animationController.SetTrigger("Damage");
                 health -= 1;
+                hitCounter.GetComponent<HitCounter>().isHit = true;
                 if (health <= 0)
                 {
                     animationController.SetTrigger("Death");
@@ -97,6 +103,7 @@ public class EnemyController : MonoBehaviour
             }
             else if (collision.gameObject.tag == "PlayerHeavy")
             {
+                hitCounter.GetComponent<HitCounter>().isHit = true;
                 animationController.SetTrigger("Death");
             }
         }

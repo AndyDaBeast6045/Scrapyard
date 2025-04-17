@@ -15,12 +15,14 @@ public class HitCounter : MonoBehaviour
     public String[] hitRanks;
     public String currentHitRank;
     private bool isHitting;
+    public bool isHit;
     private float timer;
     public TMP_Text hitText;
     private Vector2 originalPosition;
 
     void Start()
     {
+        isHit = false;
         isHitting = false;
         timer = hitTime;
         lightAttackAction = InputSystem.actions.FindAction("LightAttack");
@@ -48,12 +50,10 @@ public class HitCounter : MonoBehaviour
 
         
         // if(lightAttackAction.WasPressedThisFrame() || heavyAttackAction.WasPressedThisFrame())
-        if(Input.GetKeyDown(KeyCode.F)) {
-            
+        if(isHit) {
+            isHit = false;
             if (!isHitting) isHitting = true;
-            timer = hitTime;
-            hitCounter++;
-            Debug.Log("Hit counter: " + hitCounter);
+            OnHit();
         }
 
         currentHitRank = GetCurrentHitRank();
@@ -61,6 +61,11 @@ public class HitCounter : MonoBehaviour
         
     } // Update
 
+    public void OnHit(){
+        timer = hitTime;
+        hitCounter++;
+        Debug.Log("Hit counter: " + hitCounter);
+    }
     private String GetCurrentHitRank() {
         String rank;
         if (hitCounter <= 0) rank = "";
