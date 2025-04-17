@@ -9,7 +9,8 @@ public class ScoreBoard : MonoBehaviour
 
     private float scoreMultiplier = 1.0f;
     private int comboCounter = 0;
-    
+    private string currentRank = "Base";
+
     private void Awake()
     {
         if (Instance == null)
@@ -23,18 +24,22 @@ public class ScoreBoard : MonoBehaviour
         UpdateScoreText();
     }
 
-    public void AddScore(string attackType)
+    public void AddScore(string attackType, bool isUsingWeapon = false)
     {
-        int basePoints = GetAttackPoints(attackType);
+        int basePoints = GetAttackPoints(attackType, isUsingWeapon);
         int finalPoints = Mathf.RoundToInt(basePoints * scoreMultiplier);
         score += finalPoints;
+
+        //This will only increase combo for attacks
         comboCounter++;
         UpdateMultiplier();
         UpdateScoreText();
     }
 
-    private int GetAttackPoints(string attackType)
+    private int GetAttackPoints(string attackType, bool isUsingWeapon)
     {
+        if (isUsingWeapon) return 200;
+
         switch (attackType)
         {
             case "light": return 100;
@@ -46,23 +51,56 @@ public class ScoreBoard : MonoBehaviour
 
     private void UpdateMultiplier()
     {
-        if (comboCounter < 5) scoreMultiplier = 1.0f; 
-        else if (comboCounter < 10) scoreMultiplier = 1.25f; 
-        else if (comboCounter < 15) scoreMultiplier = 1.5f;
-        else if (comboCounter < 20) scoreMultiplier = 1.75f;
-        else if (comboCounter < 25) scoreMultiplier = 2.0f;
-        else scoreMultiplier = 3.0f;
+        if (comboCounter < 5)
+        {
+            scoreMultiplier = 1.0f;
+            currentRank = "Base";
+        }
+        else if (comboCounter < 10)
+        {
+            scoreMultiplier = 1.25f;
+            currentRank = "D";
+        }
+        else if (comboCounter < 15)
+        {
+            scoreMultiplier = 1.5f;
+            currentRank = "C";
+        }
+        else if (comboCounter < 20)
+        {
+            scoreMultiplier = 1.75f;
+            currentRank = "B";
+        }
+        else if (comboCounter < 25)
+        {
+            scoreMultiplier = 2.0f;
+            currentRank = "A";
+        }
+        else
+        {
+            scoreMultiplier = 3.0f;
+            currentRank = "S";
+        }
     }
 
     public void EnemyDefeated(bool isBoss)
     {
+        // Shouldn't be affected by the multiplier
         score += isBoss ? 10000 : 500;
         UpdateScoreText();
     }
 
     public void PickUpItem()
     {
+        //Same for this
         score += 50;
+        UpdateScoreText();
+    }
+
+    public void PerfectBlock()
+    {
+        //Same for this
+        score += 300;
         UpdateScoreText();
     }
 
@@ -70,13 +108,15 @@ public class ScoreBoard : MonoBehaviour
     {
         comboCounter = 0;
         scoreMultiplier = 1.0f;
+        currentRank = "Base";
+        UpdateScoreText();
     }
 
     private void UpdateScoreText()
     {
         if (scoreText != null)
         {
-            scoreText.text = "Score: " + score;
+            scoreText.text = $"Score: {score} | Combo: {comboCounter} | Rank: {currentRank}";
         }
     }
 }
