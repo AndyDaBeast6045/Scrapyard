@@ -24,16 +24,19 @@ public class ScoreBoard : MonoBehaviour
         UpdateScoreText();
     }
 
-    public void AddScore(string attackType, bool isUsingWeapon = false)
+    public void AddScore(string attackType, int combo, bool isUsingWeapon = false)
     {
         int basePoints = GetAttackPoints(attackType, isUsingWeapon);
         int finalPoints = Mathf.RoundToInt(basePoints * scoreMultiplier);
         score += finalPoints;
 
         //This will only increase combo for attacks
-        comboCounter++;
+        //comboCounter++;
+        comboCounter = combo;
+
         UpdateMultiplier();
         UpdateScoreText();
+        ResultsScreen.score = this.score;
     }
 
     private int GetAttackPoints(string attackType, bool isUsingWeapon)

@@ -96,6 +96,7 @@ public class EnemyController : MonoBehaviour
                 animationController.SetTrigger("Damage");
                 health -= 1;
                 hitCounter.GetComponent<HitCounter>().isHit = true;
+                hitCounter.GetComponent<HitCounter>().attackType = "light";
                 if (health <= 0)
                 {
                     animationController.SetTrigger("Death");
@@ -104,6 +105,7 @@ public class EnemyController : MonoBehaviour
             else if (collision.gameObject.tag == "PlayerHeavy")
             {
                 hitCounter.GetComponent<HitCounter>().isHit = true;
+                hitCounter.GetComponent<HitCounter>().attackType = "heavy";
                 animationController.SetTrigger("Death");
             }
         }

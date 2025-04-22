@@ -59,7 +59,7 @@ public class TitleScreen : MonoBehaviour
     {
         Debug.Log("Start Game Pressed");
         // Example: Load the next scene (replace "GameScene" with your scene name)
-        // SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("Main");
     }
 
     public void OpenOptions()

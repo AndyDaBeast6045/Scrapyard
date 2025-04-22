@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
@@ -135,9 +136,16 @@ public class PlayerController : MonoBehaviour
                 {
                     animationController.SetTrigger("Death");
                     dead = true;
+                    StartCoroutine(WaitForDeathAnimation());
                 }
             }
         }
         isColliding = true;
+    }
+
+    IEnumerator WaitForDeathAnimation()
+    {
+        yield return new WaitForSeconds(3);
+        SceneManager.LoadScene("ResultsScreenTesting");
     }
 }

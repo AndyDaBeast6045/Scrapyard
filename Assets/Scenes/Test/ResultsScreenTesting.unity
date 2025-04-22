@@ -358,13 +358,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resultsPanel: {fileID: 1841680754}
-  enemiesDefeatedText: {fileID: 1539147373}
+  scoreText: {fileID: 1539147373}
   timeTakenText: {fileID: 1896060752}
   maxComboText: {fileID: 2071329740}
   pressAnyKeyText: {fileID: 1986486224}
-  enemiesDefeated: 0
   timeTaken: 0
-  maxCombo: 0
 --- !u!1 &531537004
 GameObject:
   m_ObjectHideFlags: 0
@@ -1063,7 +1061,7 @@ GameObject:
   - component: {fileID: 1539147374}
   - component: {fileID: 1539147373}
   m_Layer: 5
-  m_Name: EnemiesDefeatedText
+  m_Name: ScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1108,7 +1106,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Enemies Defeated:'
+  m_text: 'Score:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 789e0e36fe5f0084eb43f9ce4f9009c0, type: 2}
   m_sharedMaterial: {fileID: 4914606132325019914, guid: 789e0e36fe5f0084eb43f9ce4f9009c0, type: 2}
@@ -1842,7 +1840,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -95, y: -94}
+  m_AnchoredPosition: {x: -95, y: -53.3}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2071329740

@@ -6,7 +6,7 @@ public class ResultsScreen : MonoBehaviour
 {
     [Header("UI Elements")]
     public GameObject resultsPanel;
-    public TextMeshProUGUI enemiesDefeatedText;
+    public TextMeshProUGUI scoreText;
     public TextMeshProUGUI timeTakenText;
     public TextMeshProUGUI maxComboText;
     public GameObject pressAnyKeyText;
@@ -15,9 +15,9 @@ public class ResultsScreen : MonoBehaviour
     private bool hasPressedKey = false;
 
     // These values will be set by your gameplay system
-    public int enemiesDefeated = 0;
+    public static int score = 0;
     public float timeTaken = 0f;
-    public int maxCombo = 0;
+    public static int maxCombo = 0;
 
     void Start()
     {
@@ -29,7 +29,7 @@ public class ResultsScreen : MonoBehaviour
 
         // Set labels without values
         timeTakenText.text = "Timer: ";
-        enemiesDefeatedText.text = "Enemies Defeated: ";
+        scoreText.text = "Score: ";
         maxComboText.text = "Max Combo: ";
 
         Invoke("ShowResults", 1f);
@@ -64,7 +64,7 @@ public class ResultsScreen : MonoBehaviour
         timeTakenText.text += timeTaken.ToString("F2") + "s";
 
         yield return new WaitForSeconds(0.5f);
-        enemiesDefeatedText.text += enemiesDefeated;
+        scoreText.text += score;
 
         yield return new WaitForSeconds(0.5f);
         maxComboText.text += maxCombo;
