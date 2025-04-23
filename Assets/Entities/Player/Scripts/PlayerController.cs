@@ -15,8 +15,8 @@ public class PlayerController : MonoBehaviour
     private bool isColliding = false;
     private bool dead = false;
 
-    [SerializeField] private int maxHealth = 10;
-    [SerializeField] private int currentHealth = 10;
+    [SerializeField] private int maxHealth = 20;
+    [SerializeField] private int currentHealth = 20;
     [SerializeField] private float moveSpeed = 1.5f;
     [SerializeField] private float sprintSpeed = 1.5f;
     [SerializeField] private float staminaMax = 100.0f;
