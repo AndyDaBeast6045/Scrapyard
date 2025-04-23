@@ -19,6 +19,9 @@ public class ResultsScreen : MonoBehaviour
     public static float timeTaken = 0f;
     public static int maxCombo = 0;
 
+    // Tracks which stage is next
+    public static int nextSceneIndex;
+
     void Start()
     {
         resultsPanel.SetActive(true);
@@ -73,7 +76,7 @@ public class ResultsScreen : MonoBehaviour
 
     void ContinueToNextScene()
     {
-        Debug.Log("Continue to next level");
-        // SceneManager.LoadScene("NextLevel");
+        //if (currentSceneIndex <= )
+        SceneManager.LoadScene(2);
     }
 }
