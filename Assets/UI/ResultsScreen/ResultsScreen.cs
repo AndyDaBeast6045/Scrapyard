@@ -16,7 +16,7 @@ public class ResultsScreen : MonoBehaviour
 
     // These values will be set by your gameplay system
     public static int score = 0;
-    public float timeTaken = 0f;
+    public static float timeTaken = 0f;
     public static int maxCombo = 0;
 
     void Start()
