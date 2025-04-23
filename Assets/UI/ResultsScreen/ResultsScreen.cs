@@ -76,7 +76,8 @@ public class ResultsScreen : MonoBehaviour
 
     void ContinueToNextScene()
     {
-        //if (currentSceneIndex <= )
-        SceneManager.LoadScene(2);
+        // Change '2' to the max amount of stages when more stages are added
+        if (nextSceneIndex > 2) SceneManager.LoadScene("Main Menu Testing");
+        SceneManager.LoadScene(nextSceneIndex);
     }
 }
