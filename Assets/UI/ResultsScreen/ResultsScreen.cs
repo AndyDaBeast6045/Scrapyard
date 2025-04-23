@@ -28,9 +28,9 @@ public class ResultsScreen : MonoBehaviour
         pressAnyKeyTMP = pressAnyKeyText.GetComponent<TextMeshProUGUI>();
 
         // Set labels without values
-        timeTakenText.text = "Timer: ";
-        scoreText.text = "Score: ";
-        maxComboText.text = "Max Combo: ";
+        timeTakenText.text = $"<color=#c0c0c0ff><align=left>Timer: <line-height=0></color>";;
+        scoreText.text = $"<color=#c0c0c0ff><align=left>Score: <line-height=0></color>";
+        maxComboText.text = $"<color=#c0c0c0ff><align=left>Max Combo: <line-height=0></color>";;
 
         Invoke("ShowResults", 1f);
     }
@@ -61,13 +61,14 @@ public class ResultsScreen : MonoBehaviour
     System.Collections.IEnumerator DisplayResultsWithDelay()
     {
         yield return new WaitForSeconds(0.5f);
-        timeTakenText.text += timeTaken.ToString("F2") + "s";
+        string seconds = timeTaken.ToString("F2") + "s";
+        timeTakenText.text += $"\n<align=right>{seconds}</align><line-height=1em>";
 
         yield return new WaitForSeconds(0.5f);
-        scoreText.text += score;
+        scoreText.text += $"\n<align=right>{score}</align><line-height=1em>";
 
         yield return new WaitForSeconds(0.5f);
-        maxComboText.text += maxCombo;
+        maxComboText.text += $"\n<align=right>{maxCombo}</align><line-height=1em>";;
     }
 
     void ContinueToNextScene()
