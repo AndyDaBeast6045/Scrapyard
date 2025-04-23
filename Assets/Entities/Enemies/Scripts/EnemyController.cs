@@ -41,15 +41,16 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        SetColliding(false);
         if (dead)
         {
             Destroy(gameObject);
         }
-        SetColliding(false);
+        
         playerPosition = new Vector2(playerObject.transform.position.x, playerObject.transform.position.y);
         if (moveEnabled)
         {
+            
             if (playerPosition.x > transform.position.x)
             {
                 xMovement = 1;

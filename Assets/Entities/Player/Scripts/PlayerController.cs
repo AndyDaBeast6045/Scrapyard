@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     private InputAction _heavyAction;
     private bool isColliding = false;
     private bool dead = false;
+    private HitCounter hitCounter = null;
 
     [SerializeField] private int maxHealth = 20;
     [SerializeField] private int currentHealth = 20;
@@ -54,12 +55,16 @@ public class PlayerController : MonoBehaviour
         _sprintAction = InputSystem.actions.FindAction("Sprint");
         _lightAction = InputSystem.actions.FindAction("LightAttack");
         _heavyAction = InputSystem.actions.FindAction("HeavyAttack");
+        if (hitCounter == null)
+        {
+            hitCounter = GameObject.Find("HitCounter").GetComponent<HitCounter>();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        SetColliding(false);
+        
         // Getting the movement input
         _moveValue = _moveAction.ReadValue<Vector2>();
         //transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
@@ -83,6 +88,7 @@ public class PlayerController : MonoBehaviour
 
         if (moveEnabled)
         {
+            SetColliding(false);
             if (_moveValue.x > 0)
             {
                 transform.rotation = new Quaternion(0, 0, 0, 0);
@@ -123,9 +129,11 @@ public class PlayerController : MonoBehaviour
         {
             animationController.speed = 1;
         }
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -7.0f, 7.0f), Mathf.Clamp(transform.position.y, -3.5f, 0.3f), Mathf.Clamp(transform.position.y, -3.5f, 0.3f));
     }
     public void TakeDamage(int damage)
     {
+        hitCounter.Reset();
         animationController.SetTrigger("Damaged");
         currentHealth -= damage;
         if (currentHealth <= 0 && !dead)

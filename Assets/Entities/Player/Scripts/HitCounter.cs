@@ -54,13 +54,7 @@ public class HitCounter : MonoBehaviour
 
         // Resets timer after 
         if (timer <= 0f) { 
-            isHitting = false;
-            hitCounter = 0;
-            timer = hitTime;
-            hitText.enabled = false;
-            transform.GetChild(0).GetChild(0).gameObject.SetActive(false); // Don't show HitComboBG
-            transform.GetChild(0).GetChild(2).gameObject.SetActive(false); // Don't show "HITS"
-            //Debug.Log("Hit counter: " + hitCounter);
+            Reset();
         }
 
         // When player hits an enemy
@@ -89,8 +83,30 @@ public class HitCounter : MonoBehaviour
         
     } // Update
 
+    public void Reset()
+    {
+        isHitting = false;
+        hitCounter = 0;
+        timer = hitTime;
+        hitText.enabled = false;
+        transform.GetChild(0).GetChild(0).gameObject.SetActive(false); // Don't show HitComboBG
+        transform.GetChild(0).GetChild(2).gameObject.SetActive(false); // Don't show "HITS"
+                                                                       //Debug.Log("Hit counter: " + hitCounter);
+    }
     IEnumerator ScaleHitText() {
-        hitText.fontSize = 26f;
+        if (hitCounter <= 10)
+        {
+            hitText.fontSize = 26f;
+        }
+        else if (hitCounter <= 30)
+        {
+            hitText.fontSize = 28f;
+        }
+        else
+        {
+            hitText.fontSize = 30f;
+        }
+
         //Vector3 originalScale = hitText.transform.localScale;
         //Vector3 currentScale = Vector3.Lerp(hitText.transform.localScale, Vector3.one * 2f, 5f * Time.deltaTime);
         //hitText.transform.localScale = currentScale;
@@ -105,22 +121,27 @@ public class HitCounter : MonoBehaviour
         if (hitCounter <= 5)
         {
             hitText.color = Color.gray;
+            hitRankText.color = Color.gray;
         }
         else if (hitCounter <= 10)
         {
             hitText.color = Color.green;
+            hitRankText.color = Color.green;
         }
         else if (hitCounter <= 20)
         {
             hitText.color = Color.blue;
+            hitRankText.color = Color.blue;
         }
         else if (hitCounter <= 30)
         {
             hitText.color = Color.red;
+            hitRankText.color = Color.red;
         }
         else
         {
             hitText.color = Color.yellow;
+            hitRankText.color = Color.yellow;
         }
     }
     private String GetCurrentHitRank() {
