@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
 
 public class OptionsPanel : MonoBehaviour
 {
@@ -20,9 +21,10 @@ public class OptionsPanel : MonoBehaviour
     public TMP_Text attackKeyText;
 
     private KeyCode sprintKey = KeyCode.LeftShift;
-    private KeyCode attackKey = KeyCode.P;
+    private KeyCode attackKey = KeyCode.Z;
     private bool waitingForKey = false;
     private string currentKeyBinding = "";
+    [SerializeField] private InputActionReference movementRebind;
 
     void Start()
     {
