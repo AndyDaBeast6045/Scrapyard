@@ -625,14 +625,18 @@ MonoBehaviour:
   hitCounter: 0
   hitTime: 3
   hitRanks:
-  - Ok
-  - Cool
-  - Wow
-  - Amazing
+  - Dusted!
+  - Cold!
+  - Bolted!
+  - Alloyed!
+  - Scrapped!
+  - Super Scrapped!
+  - Stylishly Super Scrapped!
   currentHitRank: 
   isHit: 0
   attackType: 
   hitText: {fileID: 1650551819}
+  hitRankText: {fileID: 1139350780}
 --- !u!1 &787952168
 GameObject:
   m_ObjectHideFlags: 0
@@ -1161,7 +1165,7 @@ GameObject:
   - component: {fileID: 1139350781}
   - component: {fileID: 1139350780}
   m_Layer: 5
-  m_Name: HITS
+  m_Name: HitRank
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1183,9 +1187,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -795, y: 93.86}
-  m_SizeDelta: {x: 54.3299, y: 35.9506}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -795, y: 79.505325}
+  m_SizeDelta: {x: 117, y: 35.9506}
+  m_Pivot: {x: 0.5, y: 0.87}
 --- !u!114 &1139350780
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1241,7 +1245,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -1677,7 +1681,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}

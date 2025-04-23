@@ -19,8 +19,11 @@ public class HitCounter : MonoBehaviour
     public string attackType;
     private float timer;
     public TMP_Text hitText;
+    public TMP_Text hitRankText;
 
     private GameObject score = null;
+
+    private float scaleTime = 0;
 
     void Start()
     {
@@ -28,6 +31,7 @@ public class HitCounter : MonoBehaviour
         isHit = false;
         isHitting = false;
         timer = hitTime;
+        currentHitRank = hitRanks[0];
 
         hitText.enabled = false;
         transform.GetChild(0).GetChild(0).gameObject.SetActive(false); // Don't show HitComboBG
@@ -56,10 +60,10 @@ public class HitCounter : MonoBehaviour
             hitText.enabled = false;
             transform.GetChild(0).GetChild(0).gameObject.SetActive(false); // Don't show HitComboBG
             transform.GetChild(0).GetChild(2).gameObject.SetActive(false); // Don't show "HITS"
-            Debug.Log("Hit counter: " + hitCounter);
+            //Debug.Log("Hit counter: " + hitCounter);
         }
 
-        
+        // When player hits an enemy
         if(isHit) {
             isHit = false;
             if (!isHitting) isHitting = true;
@@ -73,8 +77,15 @@ public class HitCounter : MonoBehaviour
             ResultsScreen.maxCombo = this.maxHitCounter;
         }
 
-        currentHitRank = GetCurrentHitRank();
-
+        // Update Hit Ranks
+        if (currentHitRank != GetCurrentHitRank()) {
+            currentHitRank = GetCurrentHitRank();
+            hitRankText.text = currentHitRank;
+        }
+        
+        scaleTime += Time.deltaTime * (hitCounter < 50 ? (hitCounter / 20f) : 3f);
+        float scaleFactor = Mathf.PingPong(scaleTime, 0.30f);
+        hitRankText.fontSize = Mathf.RoundToInt(8 * (1 + scaleFactor));
         
     } // Update
 
@@ -90,7 +101,7 @@ public class HitCounter : MonoBehaviour
     public void OnHit(){
         timer = hitTime;
         hitCounter++;
-        Debug.Log("Hit counter: " + hitCounter);
+        //Debug.Log("Hit counter: " + hitCounter);
         if (hitCounter <= 5)
         {
             hitText.color = Color.gray;
@@ -114,13 +125,13 @@ public class HitCounter : MonoBehaviour
     }
     private String GetCurrentHitRank() {
         String rank;
-        if (hitCounter <= 0) rank = "";
-        else if (hitCounter < 5) rank = hitRanks[0];
-        else if (hitCounter < 10) rank = hitRanks[1];
-        else if (hitCounter < 15) rank = hitRanks[2];
-        else if (hitCounter < 20) rank = hitRanks[3];
-        else if (hitCounter < 30) rank = hitRanks[4];
-        else if (hitCounter < 40) rank = hitRanks[5];
+        if (hitCounter <= 5) rank = "";
+        else if (hitCounter < 10) rank = hitRanks[0];
+        else if (hitCounter < 15) rank = hitRanks[1];
+        else if (hitCounter < 20) rank = hitRanks[2];
+        else if (hitCounter < 30) rank = hitRanks[3];
+        else if (hitCounter < 40) rank = hitRanks[4];
+        else if (hitCounter < 50) rank = hitRanks[5];
         else rank = hitRanks[6];
         return rank;
     } // GetCurrentHitRank
