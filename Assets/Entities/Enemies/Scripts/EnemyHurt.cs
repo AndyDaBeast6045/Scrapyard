@@ -10,7 +10,7 @@ public class EnemyHurt : MonoBehaviour
     }
     private void OnTriggerEnter(Collider collision)
     {
-        if (!enemyController.GetColliding())
+        if (enemyController.GetColliding() == false)
         {
             if (collision.gameObject.tag == "PlayerLight")
             {
@@ -20,7 +20,7 @@ public class EnemyHurt : MonoBehaviour
             {
                 enemyController.TakeDamage(10, "heavy");
             }
+            enemyController.SetColliding(true);
         }
-        enemyController.SetColliding(true);
     }
 }

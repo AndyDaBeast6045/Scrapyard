@@ -15,14 +15,20 @@ public class EnemyController : MonoBehaviour
     private bool fastEnemy = false;
     private HitCounter hitCounter = null;
     private bool bossEnemy = false;
+    private SpawnerManager spawnerManager = null;
+    private int health = 5;
+    private float moveSpeed = 0.75f;
 
-    [SerializeField] private bool dead = false;
-    [SerializeField] private int health = 5;
-    [SerializeField] private float moveSpeed = 0.75f;
+    [SerializeField] private bool dead = false; 
     [SerializeField] private bool moveEnabled = true;
     [SerializeField] private Collider detection;
     [SerializeField] private Animator animationController;
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip woosh;
+    [SerializeField] private AudioClip hit;
+    [SerializeField] private AudioClip heavy;
+    [SerializeField] private AudioClip twinkle;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -34,23 +40,57 @@ public class EnemyController : MonoBehaviour
         {
             playerObject = GameObject.Find("Player");
         }
+        if (spawnerManager == null)
+        {
+            spawnerManager = GameObject.Find("Spawner").GetComponent<SpawnerManager>();
+        }
+        health = 5;
+        moveSpeed = 0.75f;
+        animationController.speed = 1f;
         spriteRenderer.color = Color.red;
-        //SetBoss();
+        if (spawnerManager.GetSpawned() == 30)
+        {
+            SetBoss();
+        }
+        else
+        {
+            EnemyDifficultyRange(spawnerManager.GetRatio());
+        }
+        
+    }
+    public void PlayWoosh()
+    {
+        audioSource.PlayOneShot(woosh, 0.5f);
+    }
+    public void PlayHit()
+    {
+        audioSource.PlayOneShot(hit, 0.5f);
+    }
+    public void PlayHeavy()
+    {
+        audioSource.PlayOneShot(heavy, 0.5f);
+    }
+    public void PlayTwinkle()
+    {
+        audioSource.PlayOneShot(twinkle, 0.5f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        SetColliding(false);
+        
         if (dead)
         {
             Destroy(gameObject);
         }
-        
+        SetColliding(false);
         playerPosition = new Vector2(playerObject.transform.position.x, playerObject.transform.position.y);
         if (moveEnabled)
         {
-            
+            if (fastEnemy)
+            {
+                animationController.speed = 1.25f;
+            }
             if (playerPosition.x > transform.position.x)
             {
                 xMovement = 1;
@@ -88,7 +128,17 @@ public class EnemyController : MonoBehaviour
     }
     public void TakeDamage(int damage, string type)
     {
-        animationController.SetTrigger("Damage");
+        animationController.speed = 1f;
+        SetColliding(true);
+        if (bossEnemy)
+        {
+            PlayHit();
+        }
+        else
+        {
+            animationController.ResetTrigger("Damage");
+            animationController.SetTrigger("Damage");
+        }
         health -= damage;
         hitCounter.isHit = true;
         hitCounter.attackType = type;
@@ -125,8 +175,9 @@ public class EnemyController : MonoBehaviour
 
     public void EnemyDifficultyRange(float ratio)
     {
-        if (Random.Range(0f, 1f) >= ratio)
+        if (Random.Range(0f, 1f) <= ratio)
         {
+            health = 10;
             fastEnemy = true;
             moveSpeed = 1.25f;
             animationController.speed = 1.25f;
@@ -138,6 +189,7 @@ public class EnemyController : MonoBehaviour
     {
         bossEnemy = true;
         health = 100;
+        animationController.speed = 1f;
         moveSpeed = 1f;
         spriteRenderer.color = new Color(1, 0, 1);
     }

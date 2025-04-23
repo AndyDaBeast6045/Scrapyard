@@ -681,7 +681,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edca8637f3095b24da1fc8991dd229b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fastRatio: 0.1
+  spawnScaling: -1
   enemyObject: {fileID: 7871071389818194172, guid: 8ab1c3f34be371547921258eaea37a3f, type: 3}
+  startingSpawnSpeed: 3
 --- !u!1 &826345246
 GameObject:
   m_ObjectHideFlags: 0
@@ -1436,7 +1439,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1502709326}
   - component: {fileID: 1502709325}
-  - component: {fileID: 1502709327}
   m_Layer: 0
   m_Name: MusicController
   m_TagString: Untagged
@@ -1454,12 +1456,12 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 95d66cdf02b9d5145a03186df2aff0eb, type: 3}
-  m_Resource: {fileID: 8300000, guid: 95d66cdf02b9d5145a03186df2aff0eb, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 03e1d2be139d8d142a15c18cfb75cff7, type: 3}
+  m_Resource: {fileID: 8300000, guid: 03e1d2be139d8d142a15c18cfb75cff7, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1556,21 +1558,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1502709327
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1502709324}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f03e8d4f00d8c6d418315b525836faf6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  musicSource: {fileID: 1502709325}
-  startclip: {fileID: 8300000, guid: 95d66cdf02b9d5145a03186df2aff0eb, type: 3}
-  loopclip: {fileID: 8300000, guid: 6f89761e26ecff34eb39b0a10bda03df, type: 3}
 --- !u!1 &1533019116
 GameObject:
   m_ObjectHideFlags: 0
@@ -2171,25 +2158,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4502517280833256828, guid: e51fc39cab255934d92ac04bbfcc0dab, type: 3}
-      propertyPath: maxHealth
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 4502517280833256828, guid: e51fc39cab255934d92ac04bbfcc0dab, type: 3}
-      propertyPath: currentHealth
-      value: 20
-      objectReference: {fileID: 0}
     - target: {fileID: 6324538270603370480, guid: e51fc39cab255934d92ac04bbfcc0dab, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 7807117779171847967, guid: e51fc39cab255934d92ac04bbfcc0dab, type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6580341935022561925, guid: e51fc39cab255934d92ac04bbfcc0dab, type: 3}
-    - {fileID: 8655325896275583411, guid: e51fc39cab255934d92ac04bbfcc0dab, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

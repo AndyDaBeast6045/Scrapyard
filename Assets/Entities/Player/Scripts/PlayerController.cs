@@ -26,6 +26,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float staminaCurrent;
     [SerializeField] private bool moveEnabled = true;
     [SerializeField] private Animator animationController;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip woosh;
+    [SerializeField] private AudioClip hit;
+    [SerializeField] private AudioClip heavy;
+    [SerializeField] private AudioClip twinkle;
 
     private Vector2 _moveValue;
     private bool _runningEnabled = true;
@@ -64,7 +69,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
         // Getting the movement input
         _moveValue = _moveAction.ReadValue<Vector2>();
         //transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
@@ -85,10 +89,9 @@ public class PlayerController : MonoBehaviour
         {
             animationController.SetTrigger("Heavy");
         }
-
+        SetColliding(false);
         if (moveEnabled)
         {
-            SetColliding(false);
             if (_moveValue.x > 0)
             {
                 transform.rotation = new Quaternion(0, 0, 0, 0);
@@ -134,6 +137,7 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(int damage)
     {
         hitCounter.Reset();
+        animationController.ResetTrigger("Damaged");
         animationController.SetTrigger("Damaged");
         currentHealth -= damage;
         if (currentHealth <= 0 && !dead)
@@ -161,6 +165,23 @@ public class PlayerController : MonoBehaviour
     public bool GetDead()
     {
         return dead;
+    }
+
+    public void PlayWoosh()
+    {
+        audioSource.PlayOneShot(woosh, 1f);
+    }
+    public void PlayHit()
+    {
+        audioSource.PlayOneShot(hit, 1f);
+    }
+    public void PlayHeavy()
+    {
+        audioSource.PlayOneShot(heavy, 1f);
+    }
+    public void PlayTwinkle()
+    {
+        audioSource.PlayOneShot(twinkle, 1f);
     }
 
     IEnumerator WaitForDeathAnimation()
