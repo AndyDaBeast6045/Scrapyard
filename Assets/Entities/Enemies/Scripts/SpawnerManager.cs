@@ -15,7 +15,7 @@ public class SpawnerManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(3f);
             if (direction)
             {
                 direction = false;

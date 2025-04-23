@@ -79,12 +79,11 @@ public class HitCounter : MonoBehaviour
     } // Update
 
     IEnumerator ScaleHitText() {
-
         hitText.fontSize = 26f;
         //Vector3 originalScale = hitText.transform.localScale;
         //Vector3 currentScale = Vector3.Lerp(hitText.transform.localScale, Vector3.one * 2f, 5f * Time.deltaTime);
         //hitText.transform.localScale = currentScale;
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.15f);
         hitText.fontSize = 20f;
     }
 
@@ -92,6 +91,26 @@ public class HitCounter : MonoBehaviour
         timer = hitTime;
         hitCounter++;
         Debug.Log("Hit counter: " + hitCounter);
+        if (hitCounter <= 5)
+        {
+            hitText.color = Color.gray;
+        }
+        else if (hitCounter <= 10)
+        {
+            hitText.color = Color.green;
+        }
+        else if (hitCounter <= 20)
+        {
+            hitText.color = Color.blue;
+        }
+        else if (hitCounter <= 30)
+        {
+            hitText.color = Color.red;
+        }
+        else
+        {
+            hitText.color = Color.yellow;
+        }
     }
     private String GetCurrentHitRank() {
         String rank;

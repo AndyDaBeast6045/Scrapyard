@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        isColliding = false;
+        SetColliding(false);
         // Getting the movement input
         _moveValue = _moveAction.ReadValue<Vector2>();
         //transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
@@ -124,23 +124,35 @@ public class PlayerController : MonoBehaviour
             animationController.speed = 1;
         }
     }
-    private void OnTriggerEnter(Collider collision)
+    public void TakeDamage(int damage)
     {
-        if (!isColliding)
+        animationController.SetTrigger("Damaged");
+        currentHealth -= damage;
+        if (currentHealth <= 0 && !dead)
         {
-            if (collision.gameObject.tag == "EnemyAttack" && !dead)
-            {
-                animationController.SetTrigger("Damaged");
-                currentHealth -= 1;
-                if (currentHealth <= 0 && !dead)
-                {
-                    animationController.SetTrigger("Death");
-                    dead = true;
-                    StartCoroutine(WaitForDeathAnimation());
-                }
-            }
+            animationController.SetTrigger("Death");
+            dead = true;
+            StartCoroutine(WaitForDeathAnimation());
         }
-        isColliding = true;
+    }
+    public void SetColliding(bool colliding)
+    {
+        if (colliding)
+        {
+            isColliding = true;
+        }
+        else
+        {
+            isColliding = false;
+        }
+    }
+    public bool GetColliding()
+    {
+        return isColliding;
+    }
+    public bool GetDead()
+    {
+        return dead;
     }
 
     IEnumerator WaitForDeathAnimation()

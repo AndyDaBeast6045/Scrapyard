@@ -8,6 +8,8 @@ TagManager:
   - PlayerLight
   - PlayerHeavy
   - EnemyAttack
+  - HitCounter
+  - EnemyHeavy
   layers:
   - Default
   - TransparentFX
