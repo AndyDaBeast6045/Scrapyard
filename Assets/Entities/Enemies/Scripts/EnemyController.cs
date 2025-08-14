@@ -2,6 +2,7 @@ using System.Collections;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class EnemyController : MonoBehaviour
@@ -76,7 +77,7 @@ public class EnemyController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         
         if (dead)
@@ -123,7 +124,7 @@ public class EnemyController : MonoBehaviour
             {
                 transform.rotation = new Quaternion(0, 180, 0, 0);
             }
-            transform.position += new Vector3(xMovement, yMovement, yMovement) * moveSpeed * Time.deltaTime;
+            transform.position += new Vector3(xMovement, yMovement, yMovement) * moveSpeed * Time.fixedDeltaTime;
         }
     }
     public void TakeDamage(int damage, string type)
@@ -145,8 +146,19 @@ public class EnemyController : MonoBehaviour
         if (health <= 0)
         {
             animationController.SetTrigger("Death");
+            if(bossEnemy && !spawnerManager.GetEndless())
+            {
+                StartCoroutine(DieCoroutine());
+            }
         }
     }
+
+    IEnumerator DieCoroutine()
+    {
+        yield return new WaitForSeconds(3);
+        SceneManager.LoadScene("ResultsScreenTesting");
+    }
+
     public void SetColliding(bool colliding)
     {
         if (colliding)

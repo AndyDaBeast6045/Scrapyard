@@ -17,8 +17,6 @@ public class PlayerDetection : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            animationController.ResetTrigger("Attack");
-            animationController.ResetTrigger("Heavy");
             StartCoroutine(Timer());
         }
     }
@@ -36,7 +34,7 @@ public class PlayerDetection : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         if (enemyController.GetBoss())
         {
-            if (Random.Range(0f, 1f) <= 0.2f)
+            if (Random.Range(0f, 1f) <= 0.5f)
             {
                 animationController.SetTrigger("Heavy");
             }

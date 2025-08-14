@@ -48,6 +48,10 @@ public class SpawnerManager : MonoBehaviour
         return fastRatio;
     }
 
+    public bool GetEndless()
+    {
+        return endless;
+    }
     public int GetSpawned()
     {
         return enemiesSpawned;

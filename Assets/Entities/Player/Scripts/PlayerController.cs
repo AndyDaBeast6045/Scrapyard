@@ -87,6 +87,7 @@ public class PlayerController : MonoBehaviour
         }
         if (_heavyAction.WasPressedThisFrame() && (moveEnabled == true))
         {
+            staminaCurrent -= 30f;
             animationController.SetTrigger("Heavy");
         }
         SetColliding(false);
